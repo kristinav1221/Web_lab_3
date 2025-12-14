@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Start Page - Lab 3</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript library="js" name="clock.js" target="body"/>
+</h:head>
+
+<h:body>
+
+    <header class="header">
+        <h1>Лабораторная работа №3</h1>
+        <p>Студентка: Вернер Кристина Витальевна</p>
+        <p>Группа: P3230</p>
+        <p>Вариант: 98653</p>
+    </header>
+
+    <div class="container">
+        <h2>Добро пожаловать!</h2>
+
+        <div id="clock" class="clock-container">Loading clock...</div>
+
+        <h:form>
+            <h:commandButton value="Перейти на основную страницу" styleClass="nav-link" action="goMain"/>
+        </h:form>
+    </div>
+
+</h:body>
+</html>
