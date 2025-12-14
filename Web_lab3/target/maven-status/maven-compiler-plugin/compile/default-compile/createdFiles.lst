@@ -1,0 +1,6 @@
+com\lab3\util\AreaChecker.class
+com\lab3\beans\PointBean.class
+com\lab3\beans\ResultsBean.class
+com\lab3\db\ResultsDAO.class
+com\lab3\util\HibernateUtil.class
+com\lab3\model\PointResult.class

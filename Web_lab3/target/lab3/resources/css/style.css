@@ -1,0 +1,150 @@
+body {
+    font-family: "SourceSerifPro", Arial, fantasy;
+    background-color: whitesmoke;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Шапка */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #35006a;
+    color: white;
+    padding: 8px 0;
+    font-size: 0.85em;
+    z-index: 10;
+    box-shadow: 0 0 10px 1px rgb(30, 2, 62);
+}
+
+.header h1 {
+    margin: 5px 0;
+    font-size: 1.2em;
+}
+
+/* Контейнер */
+.container {
+    margin-top: 90px;
+    background-color: ghostwhite;
+    padding: 20px;
+    border-radius: 10px;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 10px 1px rgb(30, 2, 62);
+}
+
+/* Общий стиль кнопок */
+.nav-link {
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    color: white;
+    background-color: #8d61de;
+    margin-top: 15px;
+    display: inline-block;
+    transition: 0.4s;
+    box-shadow: 0 5px 15px #193047;
+}
+
+.nav-link:hover {
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 10px 5px #8d61de;
+}
+
+/* X */
+.x-btn {
+    background-color: #35006a; /* обычное — тёмно-фиолетовый */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin: 3px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px #193047;
+}
+
+.x-btn:hover {
+    background-color: white; /* hover — белый */
+    color: black;
+}
+
+.x-btn.selected {
+    background-color: #8d61de; /* выбранная — светло-фиолетовая */
+    color: black;
+    box-shadow: 0 0 10px 3px #8d61de;
+}
+
+/* Y */
+.y-field {
+    margin: 15px 0;
+}
+
+.y-field input {
+    margin-left: 10px;
+    width: 80px;
+    text-align: center;
+}
+
+/* R */
+.r-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 4px;
+    border-radius: 6px;
+    background-color: #35006a; /* обычное — тёмно-фиолетовый */
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px #193047;
+}
+
+.r-btn:hover {
+    background-color: white; /* hover — белый */
+    color: black;
+}
+
+.r-btn.selected {
+    background-color: #8d61de; /* выбранная — светло-фиолетовая */
+    color: black;
+    box-shadow: 0 0 10px 3px #8d61de;
+}
+
+/* Таблица */
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #35006a;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: ghostwhite;
+    box-shadow: 0 0 10px 1px rgb(30, 2, 62);
+}
+
+.result-table th {
+    background-color: #35006a;
+    color: white;
+    padding: 20px;
+}
+
+.result-table td {
+    padding: 18px;
+    border: 1px solid #35006a;
+}
+
+.result-hit {
+    color: #09a53d;
+    font-weight: bold;
+}
+
+.result-miss {
+    color: #a50909;
+    font-weight: bold;
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Main Page - Lab 3</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript>
+        var points = #{resultsBean.jsonResults};
+        var currentR = #{pointBean.r};
+    </h:outputScript>
+    <h:outputScript library="js" name="graph.js"/>
+</h:head>
+
+<h:body>
+
+    <header class="header">
+        <h1>Основная страница</h1>
+        <h:form>
+            <h:commandLink action="goIndex"
+                           value="Вернуться на стартовую"
+                           styleClass="nav-link"/>
+        </h:form>
+    </header>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+
+            <div class="graph-container">
+                <canvas id="graphCanvas" width="400" height="400"></canvas>
+                <h:form id="graphForm" style="display:none;">
+                    <h:inputHidden id="graphX" value="#{pointBean.x}"/>
+                    <h:inputHidden id="graphY" value="#{pointBean.y}"/>
+                    <h:commandButton id="graphSubmit" action="#{pointBean.submit()}">
+                        <f:ajax execute="@form" render="resultsTable graphUpdatePanel"/>
+                    </h:commandButton>
+                </h:form>
+            </div>
+
+            <div class="form-container">
+                <h:form id="form">
+                    <h3>Параметры</h3>
+
+                    <!-- X -->
+                    <div>
+                        <h:outputLabel value="X:"/>
+                        <div>
+                            <h:commandButton value="-5" action="#{pointBean.setX(-5)}" styleClass="x-btn" onclick="selectX(this);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandButton>
+                            <h:commandButton value="-4" action="#{pointBean.setX(-4)}" styleClass="x-btn" onclick="selectX(this);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandButton>
+                            <h:commandButton value="-3" action="#{pointBean.setX(-3)}" styleClass="x-btn" onclick="selectX(this);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandButton>
+                            <h:commandButton value="0" action="#{pointBean.setX(0)}" styleClass="x-btn" onclick="selectX(this);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandButton>
+                            <h:commandButton value="1" action="#{pointBean.setX(1)}" styleClass="x-btn" onclick="selectX(this);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandButton>
+                            <h:commandButton value="2" action="#{pointBean.setX(2)}" styleClass="x-btn" onclick="selectX(this);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandButton>
+                            <h:commandButton value="3" action="#{pointBean.setX(3)}" styleClass="x-btn" onclick="selectX(this);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+
+                    <!-- Y -->
+                    <div class="y-field">
+                        <h:outputLabel for="y" value="Y (-3 ... 3):"/>
+                        <h:inputText id="y" value="#{pointBean.y}" required="true"
+                                     requiredMessage="Поле Y обязательно для заполнения"
+                                     validatorMessage="Y должно быть числом от -3 до 3">
+                            <f:validateDoubleRange minimum="-3" maximum="3"/>
+                            <f:ajax event="blur" render="graphUpdatePanel yMessage"/>
+                        </h:inputText>
+                        <h:message id="yMessage" for="y" styleClass="error-message"/>
+                    </div>
+
+
+                    <!-- R -->
+                    <div>
+                        <h:outputLabel value="R:"/>
+                        <div>
+                            <h:commandLink value="1" action="#{pointBean.setR(1)}"
+                                           styleClass="r-btn"
+                                           onclick="selectR(this); updateRClient(1);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandLink>
+                            <h:commandLink value="2" action="#{pointBean.setR(2)}"
+                                           styleClass="r-btn"
+                                           onclick="selectR(this); updateRClient(2);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandLink>
+                            <h:commandLink value="3" action="#{pointBean.setR(3)}"
+                                           styleClass="r-btn"
+                                           onclick="selectR(this); updateRClient(3);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandLink>
+                            <h:commandLink value="4" action="#{pointBean.setR(4)}"
+                                           styleClass="r-btn"
+                                           onclick="selectR(this); updateRClient(4);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandLink>
+                            <h:commandLink value="5" action="#{pointBean.setR(5)}"
+                                           styleClass="r-btn"
+                                           onclick="selectR(this); updateRClient(5);">
+                                <f:ajax render="graphUpdatePanel"/>
+                            </h:commandLink>
+                        </div>
+                    </div>
+
+                    <!-- Проверить -->
+                    <h:commandButton id="checkButton"
+                                     value="Проверить"
+                                     styleClass="nav-link"
+                                     action="#{pointBean.submit()}">
+                        <f:ajax execute="@form" render="@form resultsTable graphUpdatePanel"/>
+                    </h:commandButton>
+                </h:form>
+            </div>
+
+            <h:panelGroup id="graphUpdatePanel">
+                <h:outputScript>
+                    points = #{resultsBean.jsonResults};
+                    currentR = #{pointBean.r};
+                    drawGraph();
+                </h:outputScript>
+            </h:panelGroup>
+        </div>
+
+        <!-- Очистить -->
+        <h:form style="margin-bottom: 15px;">
+            <h:commandButton id="clearButton"
+                             value="Очистить историю"
+                             styleClass="nav-link"
+                             action="#{resultsBean.clearResults()}">
+                <f:ajax render="resultsTable graphUpdatePanel"/>
+            </h:commandButton>
+        </h:form>
+
+        <h3>История проверок</h3>
+        <h:dataTable id="resultsTable" value="#{resultsBean.results}" var="res" styleClass="result-table">
+            <h:column><f:facet name="header">ID</f:facet>#{res.id}</h:column>
+            <h:column><f:facet name="header">X</f:facet>#{res.x}</h:column>
+            <h:column><f:facet name="header">Y</f:facet>#{res.y}</h:column>
+            <h:column><f:facet name="header">R</f:facet>#{res.r}</h:column>
+            <h:column>
+                <f:facet name="header">Результат</f:facet>
+                <span class="#{res.result ? 'result-hit' : 'result-miss'}">
+                #{res.resultString}
+            </span>
+            </h:column>
+        </h:dataTable>
+    </div>
+
+    <h:outputScript>
+        function updateRClient(newR) {
+        currentR = newR;
+        drawGraph();
+        }
+
+        function selectR(el) {
+        document.querySelectorAll('.r-btn')
+        .forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+        }
+
+        function selectX(el) {
+        document.querySelectorAll('.x-btn')
+        .forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+        }
+    </h:outputScript>
+
+</h:body>
+</html>
